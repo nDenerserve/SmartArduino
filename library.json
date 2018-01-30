@@ -1,0 +1,20 @@
+{
+"name": "SmartArduino",
+"frameworks": "Arduino",
+"keywords": "SmartArduino, read",
+"description": "SmartPi with Arduino",
+"authors":
+[
+    {
+        "name": "Clemens Köbe",
+        "email": "info@enerserve.eu",
+        "url": "http://www.enerserve.eu",
+        "maintainer": true
+    }
+],
+"repository":
+{
+    "type": "git",
+    "url": "https://github.com/nDenerserve/SmartArduino"
+}
+}
