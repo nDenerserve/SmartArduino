@@ -41,5 +41,6 @@ public:
 	
 	SmartArduino();
 	int read();
+	int init();
 };
 #endif

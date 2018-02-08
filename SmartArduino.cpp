@@ -1,9 +1,127 @@
-#include <SmartArduino.h>
 #include <Wire.h>
-
+#include <Arduino.h>
+#include <SmartArduino.h>
 
 
 SmartArduino::SmartArduino()
+{
+  Wire.begin();
+  /*char data[10];
+  int i;
+
+  data[0] = 0xEC;//0xEC01 (CONFIG2-REGISTER)
+  data[1] = 0x01;
+  data[2] = 0x02;//00000010 --> Bedeutet I2C-Lock (I2C ist nun die gewählte Übertragungsart)
+  write_i2c( data, 3);
+
+
+  data[0] = 0xEC;//0xEC01 (CONFIG2-REGISTER)
+  write_i2c( data, 1);
+
+  data[0] = 0xE7;//0xE7FE writeprotection
+  data[1] = 0xFE;
+  data[2] = 0xAD;
+  write_i2c( data, 3);
+  
+  data[0] = 0xE7;//0xE7E3 writeprotection OFF
+  data[1] = 0xE3;
+  data[2] = 0x00;
+  write_i2c( data, 3);
+  
+  data[0] = 0xE6;//0xE60E (COMPMODE-REGISTER)
+  data[1] = 0x0E;
+  data[2] = 0x01;//50HZ 0x60 60HZ
+  data[3] = 0xFF;
+  write_i2c( data, 3);
+
+  data[0] = 0x43;//0x43B5 (DICOEFF-REGISTER)
+  data[1] = 0xB5;
+  data[2] = 0xFF;
+  data[3] = 0x80;
+  data[4] = 0x00;
+  write_i2c( data, 5);
+  
+  data[0] = 0x43;//0x43AB (WTHR1-REGISTER)
+  data[1] = 0xAB;
+  data[2] = 0x00;
+  data[3] = 0x00;
+  data[4] = 0x00;
+  data[5] = 0x17;
+  write_i2c( data, 6);
+  
+  data[0] = 0x43;//0x43AC (WTHR0-REGISTER)
+  data[1] = 0xAC;
+  data[2] = 0x00;
+  data[3] = 0x85;
+  data[4] = 0x60;
+  data[5] = 0x16;
+  write_i2c( data, 6);
+  
+  data[0] = 0x43;//0x43B3 (VLEVEL-REGISTER)
+  data[1] = 0xB3;
+  data[2] = 0x00;
+  data[3] = 0x0C;
+  data[4] = 0xEC;
+  data[5] = 0x85;
+  write_i2c( data, 6);
+  
+  delay(875);
+  
+  data[0] = 0x43;//0x4381 (AVGAIN-REGISTER)
+  data[1] = 0x81;
+  data[2] = 0xFF;
+  data[3] = 0xFC;
+  data[4] = 0x1C;
+  data[5] = 0xC2;
+  write_i2c( data, 6);
+  
+  data[0] = 0x43;//0x4383 (BVGAIN-REGISTER)
+  data[1] = 0x83;
+  data[2] = 0xFF;
+  data[3] = 0xFC;
+  data[4] = 0x1C;
+  data[5] = 0xC2;
+  write_i2c( data, 6);
+  
+  data[0] = 0x43;//0x4385 (CVGAIN-REGISTER)
+  data[1] = 0x85;
+  data[2] = 0xFF;
+  data[3] = 0xFC;
+  data[4] = 0x1C;
+  data[5] = 0xC2;
+  write_i2c( data, 6);
+  
+  data[0] = 0xE7;//0xE702 LCYCMODE
+  data[1] = 0x02;
+  data[2] = 0x0F;
+  write_i2c( data, 3);
+  
+  data[0] = 0xE6;//0xE60C LINECYC
+  data[1] = 0x0C;
+  data[2] = 0xC8;
+  write_i2c( data, 3);
+  
+  data[0] = 0xE7;//0xE7FE writeprotection
+  data[1] = 0xFE;
+  data[2] = 0xAD;
+  write_i2c( data, 3);
+  
+  data[0] = 0xE7;//0xE7E3 writeprotection
+  data[1] = 0xE3;
+  data[2] = 0x80;
+  write_i2c( data, 3);
+  
+  data[0] = 0xE2;//0xE228 (RUN-Register)
+  data[1] = 0x28;
+  data[2] = 0x00;
+  data[3] = 0x01;
+  write_i2c( data, 4);*/
+  
+}
+
+
+
+int SmartArduino::init()
 {
   Wire.begin();
   char data[10];
@@ -13,6 +131,8 @@ SmartArduino::SmartArduino()
   data[1] = 0x01;
   data[2] = 0x02;//00000010 --> Bedeutet I2C-Lock (I2C ist nun die gewählte Übertragungsart)
   write_i2c( data, 3);
+
+ 
 
   data[0] = 0xEC;//0xEC01 (CONFIG2-REGISTER)
   write_i2c( data, 1);
@@ -141,7 +261,7 @@ int SmartArduino::read()
     if(write_i2c(data_out, 2) != 2)
 	{
 		Wire.flush();
-		Wire.reset();
+		//Wire.reset();
 		return -1;
 	}
     if(read_i2c(data, 4) != 4) return -1;
@@ -374,8 +494,8 @@ int SmartArduino::read()
 int SmartArduino::write_i2c(char data[],unsigned char length)
 {
    unsigned char i;
-   Wire.beginTransmission(ADE_ADDRESS);
-   for(i=0;i<length;i++)
+    Wire.beginTransmission(ADE_ADDRESS);
+  for(i=0;i<length;i++)
    {
      Wire.write(data[i]);
    }
